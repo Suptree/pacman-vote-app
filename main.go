@@ -38,6 +38,7 @@ func main() {
 	router.HandleFunc("/mode", findAllModes).Methods("GET")
 
 	router.HandleFunc("/door", createDoor).Methods("POST")
+	router.HandleFunc("/mode", createMode).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":80", router))
 }
