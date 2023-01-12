@@ -34,11 +34,11 @@ func main() {
 	router.HandleFunc("/", home)
 	// router.HandleFunc("/users", findAllUsers)
 	// router.HandleFunc("/users/{id}", findByID)
-	router.HandleFunc("/door", findAllDoors).Methods("GET")
-	router.HandleFunc("/mode", findAllModes).Methods("GET")
+	router.HandleFunc("/door", findAllDoors).Methods("GET", "OPTIONS")
+	router.HandleFunc("/mode", findAllModes).Methods("GET", "OPTIONS")
 
-	router.HandleFunc("/door", createDoor).Methods("POST")
-	router.HandleFunc("/mode", createMode).Methods("POST")
+	router.HandleFunc("/door", createDoor).Methods("POST", "OPTIONS")
+	router.HandleFunc("/mode", createMode).Methods("POST", "OPTIONS")
 
 	log.Fatal(http.ListenAndServe(":80", router))
 }
@@ -48,6 +48,9 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func findAllDoors(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	// DB接続
 	db := utils.GetConnection()
 	defer db.Close()
@@ -90,6 +93,9 @@ func findAllDoors(w http.ResponseWriter, r *http.Request) {
 }
 
 func findAllModes(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	// DB接続
 	db := utils.GetConnection()
 	defer db.Close()
@@ -132,6 +138,9 @@ func findAllModes(w http.ResponseWriter, r *http.Request) {
 }
 
 func createDoor(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	// リクエストボディ取得
 	body, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
@@ -159,6 +168,9 @@ func createDoor(w http.ResponseWriter, r *http.Request) {
 }
 
 func createMode(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "OPTIONS" {
+		return
+	}
 	// リクエストボディ取得
 	body, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
