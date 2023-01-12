@@ -55,6 +55,23 @@ func findAllDoors(w http.ResponseWriter, r *http.Request) {
 		door_res.Door = doorsChoice[rand.Intn(7)]
 
 	} else {
+		m := map[string]int{"red": 0, "orange": 0, "yellow": 0, "green": 0, "cyan": 0, "blue": 0, "purple": 0}
+		for i := 0; i < len(doorList); i++ {
+			m[doorList[i].Door]++
+		}
+		var max_key string
+		var max_value int
+		max_value = -1
+
+		for k, v := range m {
+			if max_value < v {
+				max_value = v
+				max_key = k
+			}
+
+			fmt.Printf("key: %s, value: %d\n", k, v)
+		}
+		door_res.Door = max_key
 
 	}
 
