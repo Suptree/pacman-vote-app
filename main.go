@@ -44,6 +44,8 @@ func findAllDoors(w http.ResponseWriter, r *http.Request) {
 	// db.Table("door").Find(&doorList)
 	db.Raw(`select door from door where created > current_timestamp + interval - 30 second`).Scan(&doorList)
 
+	fmt.Println(len(doorList))
+
 	// 共通化した処理を使う
 	utils.RespondWithJSON(w, http.StatusOK, doorList)
 }
