@@ -23,12 +23,15 @@ type User struct {
 type Door struct {
 	Door string `json:"door"`
 }
+type Mode struct {
+	Mode string `json:"mode"`
+}
 
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", home)
-	router.HandleFunc("/users", findAllUsers)
-	router.HandleFunc("/users/{id}", findByID)
+	// router.HandleFunc("/users", findAllUsers)
+	// router.HandleFunc("/users/{id}", findByID)
 	router.HandleFunc("/door", findAllDoors)
 	log.Fatal(http.ListenAndServe(":80", router))
 }
@@ -77,6 +80,48 @@ func findAllDoors(w http.ResponseWriter, r *http.Request) {
 
 	// 共通化した処理を使う
 	utils.RespondWithJSON(w, http.StatusOK, door_res)
+}
+
+func findAllModes(w http.ResponseWriter, r *http.Request) {
+	// DB接続
+	db := utils.GetConnection()
+	defer db.Close()
+
+	var modeList []Mode
+	var mode_res Mode
+
+	// db.Table("door").Find(&doorList)
+	db.Raw(`select mode from mode where created > current_timestamp + interval - 30 second`).Scan(&modeList)
+
+	fmt.Println(len(modeList))
+	if len(modeList) == 0 {
+		rand.Seed(time.Now().UnixNano())
+		modesChoice := []string{"light", "dark"}
+		mode_res.Mode = modesChoice[rand.Intn(2)]
+
+	} else {
+		m := map[string]int{"light": 0, "dark": 0}
+		for i := 0; i < len(modeList); i++ {
+			m[modeList[i].Mode]++
+		}
+		var max_key string
+		var max_value int
+		max_value = -1
+
+		for k, v := range m {
+			if max_value < v {
+				max_value = v
+				max_key = k
+			}
+
+			fmt.Printf("key: %s, value: %d\n", k, v)
+		}
+		mode_res.Mode = max_key
+
+	}
+
+	// 共通化した処理を使う
+	utils.RespondWithJSON(w, http.StatusOK, mode_res)
 }
 
 // /////////////////////SAMPLE////////////////////////
