@@ -157,6 +157,33 @@ func createDoor(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func createMode(w http.ResponseWriter, r *http.Request) {
+	// リクエストボディ取得
+	body, err := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	if err != nil {
+		utils.RespondWithError(w, http.StatusBadRequest, "Invalid request")
+		return
+	}
+
+	var mode Mode
+	// 読み込んだJSONを構造体に変換
+	if err := json.Unmarshal(body, &mode); err != nil {
+		utils.RespondWithError(w, http.StatusBadRequest, "JSON Unmarshaling failed .")
+		return
+	}
+
+	// DB接続
+	db := utils.GetConnection()
+	defer db.Close()
+
+	// DBにINSERTする
+	db.Table("mode").Create(&mode)
+
+	utils.RespondWithJSON(w, http.StatusOK, mode)
+
+}
+
 // /////////////////////SAMPLE////////////////////////
 func findAllUsers(w http.ResponseWriter, r *http.Request) {
 	// DB接続
