@@ -31,6 +31,7 @@ type Mode struct {
 
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
+
 	router.HandleFunc("/", home)
 	// router.HandleFunc("/users", findAllUsers)
 	// router.HandleFunc("/users/{id}", findByID)
@@ -49,6 +50,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 func findAllDoors(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
 		return
 	}
 	// DB接続
@@ -94,6 +96,7 @@ func findAllDoors(w http.ResponseWriter, r *http.Request) {
 
 func findAllModes(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
 		return
 	}
 	// DB接続
@@ -139,6 +142,7 @@ func findAllModes(w http.ResponseWriter, r *http.Request) {
 
 func createDoor(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
 		return
 	}
 	// リクエストボディ取得
@@ -169,6 +173,7 @@ func createDoor(w http.ResponseWriter, r *http.Request) {
 
 func createMode(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
 		return
 	}
 	// リクエストボディ取得
