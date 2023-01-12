@@ -33,6 +33,8 @@ func main() {
 	// router.HandleFunc("/users", findAllUsers)
 	// router.HandleFunc("/users/{id}", findByID)
 	router.HandleFunc("/door", findAllDoors)
+	router.HandleFunc("/mode", findAllModes)
+
 	log.Fatal(http.ListenAndServe(":80", router))
 }
 
