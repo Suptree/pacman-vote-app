@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <title>jqueryのajax</title>
+</head>
+
+<body>
+    <input type="radio" name="sample" value="red">red
+    <input type="radio" name="sample" value="orange">orange
+    <input type="radio" name="sample" value="yellow">yellow
+    <input type="radio" name="sample" value="green">green
+    <input type="radio" name="sample" value="cyan">cyan
+    <input type="radio" name="sample" value="blue">blue
+    <input type="radio" name="sample" value="purple">purple
+
+    <br>
+    <button>ボタン</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $('button').click(function () {
+            var r = $('input[name="sample"]:checked').val();
+
+            var choose_door = { "door": r }
+            var json_req = JSON.stringify(choose_door);
+
+            //データを送信
+            xhr = new XMLHttpRequest;       //インスタンス作成
+            xhr.onload = function () {        //レスポンスを受け取った時の処理（非同期）
+                var res = xhr.responseText;
+                if (res.length > 0) alert(res);
+            };
+            xhr.onerror = function () {       //エラーが起きた時の処理（非同期）
+                alert("error!");
+            }
+
+            // var XHR = new XMLHttpRequest();
+            // XHR.open("POST", "http://54.178.15.97/mode", );
+            xhr.open('post', "http://54.178.15.97/door", true);    //(1)
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            
+            xhr.send(json_req);    //送信実行
+            console.log(r);
+            console.log(json_req);
+        })	</script>
+</body>
+
+</html>
