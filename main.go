@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
+	"time"
 
 	"pacman/utils"
 
@@ -41,13 +43,23 @@ func findAllDoors(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	var doorList []Door
+	var door_res Door
+
 	// db.Table("door").Find(&doorList)
 	db.Raw(`select door from door where created > current_timestamp + interval - 30 second`).Scan(&doorList)
 
 	fmt.Println(len(doorList))
+	if len(doorList) == 0 {
+		rand.Seed(time.Now().UnixNano())
+		doorsChoice := []string{"red", "orange", "yellow", "green", "cyan", "blue", "purple"}
+		door_res.Door = doorsChoice[rand.Intn(7)]
+
+	} else {
+
+	}
 
 	// 共通化した処理を使う
-	utils.RespondWithJSON(w, http.StatusOK, doorList)
+	utils.RespondWithJSON(w, http.StatusOK, door_res)
 }
 
 // /////////////////////SAMPLE////////////////////////
