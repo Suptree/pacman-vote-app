@@ -1,7 +1,9 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
@@ -32,8 +34,10 @@ func main() {
 	router.HandleFunc("/", home)
 	// router.HandleFunc("/users", findAllUsers)
 	// router.HandleFunc("/users/{id}", findByID)
-	router.HandleFunc("/door", findAllDoors)
-	router.HandleFunc("/mode", findAllModes)
+	router.HandleFunc("/door", findAllDoors).Methods("GET")
+	router.HandleFunc("/mode", findAllModes).Methods("GET")
+
+	router.HandleFunc("/door", createDoor).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":80", router))
 }
@@ -124,6 +128,33 @@ func findAllModes(w http.ResponseWriter, r *http.Request) {
 
 	// 共通化した処理を使う
 	utils.RespondWithJSON(w, http.StatusOK, mode_res)
+}
+
+func createDoor(w http.ResponseWriter, r *http.Request) {
+	// リクエストボディ取得
+	body, err := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	if err != nil {
+		utils.RespondWithError(w, http.StatusBadRequest, "Invalid request")
+		return
+	}
+
+	var door Door
+	// 読み込んだJSONを構造体に変換
+	if err := json.Unmarshal(body, &door); err != nil {
+		utils.RespondWithError(w, http.StatusBadRequest, "JSON Unmarshaling failed .")
+		return
+	}
+
+	// DB接続
+	db := utils.GetConnection()
+	defer db.Close()
+
+	// DBにINSERTする
+	db.Table("door").Create(&door)
+
+	utils.RespondWithJSON(w, http.StatusOK, door)
+
 }
 
 // /////////////////////SAMPLE////////////////////////
