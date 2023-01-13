@@ -16,7 +16,8 @@
             time--;                                 // timeの更新
             dispTime();                             // timeの表示	
             if (time==0) {
-                clearInterval(timer_ID);            //【タイマーの消去】
+                // clearInterval(timer_ID);            //【タイマーの消去】
+                time = 60;
             }
         }
         
