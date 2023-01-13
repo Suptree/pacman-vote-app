@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	port := "8080"
+	port := "80"
 
 	http.Handle("/", http.FileServer(http.Dir("./"))) // ①
 	log.Printf("Server listening on http://localhost:%s/", port)
