@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>jqueryのajax</title>
+    <title>pacman extention</title>
     <link rel="stylesheet" href="./style.css">
 
     <script type="text/javascript">
@@ -35,10 +35,10 @@
 <body>
 
     <h1>Vote only once for each in time.</h1>
-    <h2>    <output></output>    </h2>
+    <h2>    Time : <output></output>  / 60(s)  </h2>
 
     <br><br><br><br><br>
-
+    <h2>support pacman by closing door</h2>
     <input type="radio" name="sample" value="red">red
     <input type="radio" name="sample" value="orange">orange
     <input type="radio" name="sample" value="yellow">yellow
@@ -62,7 +62,7 @@
             xhr = new XMLHttpRequest;       //インスタンス作成
             xhr.onload = function () {        //レスポンスを受け取った時の処理（非同期）
                 var res = xhr.responseText;
-                if (res.length > 0) alert(res);
+                if (res.length > 0) alert("vote OK!! Please vote again when the Time reaches zero.");
             };
             xhr.onerror = function () {       //エラーが起きた時の処理（非同期）
                 alert("error!");
@@ -80,7 +80,7 @@
 
 <br><br><br><br><br><br><br>
 
-
+    <h2>on/off dark mode</h2>
     <input type="radio" name="sample2" value="light">light
     <input type="radio" name="sample2" value="dark">dark
     <br>
@@ -97,7 +97,7 @@
             xhr = new XMLHttpRequest;       //インスタンス作成
             xhr.onload = function () {        //レスポンスを受け取った時の処理（非同期）
                 var res = xhr.responseText;
-                if (res.length > 0) alert(res);
+                if (res.length > 0) alert("vote OK!! Please vote again when the Time reaches zero.");
             };
             xhr.onerror = function () {       //エラーが起きた時の処理（非同期）
                 alert("error!");
