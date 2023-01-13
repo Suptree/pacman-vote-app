@@ -66,7 +66,7 @@ func findAllDoors(w http.ResponseWriter, r *http.Request) {
 	var door_res Door
 
 	// db.Table("door").Find(&doorList)
-	db.Raw(`select door from door where created > current_timestamp + interval - 30 second`).Scan(&doorList)
+	db.Raw(`select door from door where created > current_timestamp + interval - 60 second`).Scan(&doorList)
 
 	fmt.Println(len(doorList))
 	if len(doorList) == 0 {
@@ -116,7 +116,7 @@ func findAllModes(w http.ResponseWriter, r *http.Request) {
 	var mode_res Mode
 
 	// db.Table("door").Find(&doorList)
-	db.Raw(`select mode from mode where created > current_timestamp + interval - 30 second`).Scan(&modeList)
+	db.Raw(`select mode from mode where created > current_timestamp + interval - 60 second`).Scan(&modeList)
 
 	fmt.Println(len(modeList))
 	if len(modeList) == 0 {
