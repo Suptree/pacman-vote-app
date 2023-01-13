@@ -10,14 +10,14 @@
         var nowTime = new Date();
         var timer_ID;
                                        //【タイマーID】
-        var time = 60 - nowTime.getSeconds();                              // timeの初期化
+        var time = 15 - nowTime.getSeconds() % 15;                              // timeの初期化
 
         function minusTime() {
             time--;                                 // timeの更新
             dispTime();                             // timeの表示	
             if (time==0) {
                 // clearInterval(timer_ID);            //【タイマーの消去】
-                time = 60;
+                time = 15;
             }
         }
         
@@ -35,7 +35,7 @@
 <body>
 
     <h1>Vote only once for each in time.</h1>
-    <h2>    Time : <output></output>  / 60(s)  </h2>
+    <h2>    Time : <output></output>  / 15(s)  </h2>
 
     <br><br><br><br><br>
     <h2>support pacman by closing door</h2>
