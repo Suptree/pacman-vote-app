@@ -4,9 +4,40 @@
 <head>
     <meta charset="utf-8" />
     <title>jqueryのajax</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <script type="text/javascript">
+        var nowTime = new Date();
+        var timer_ID;
+                                       //【タイマーID】
+        var time = 60 - nowTime.getSeconds();                              // timeの初期化
+
+        function minusTime() {
+            time--;                                 // timeの更新
+            dispTime();                             // timeの表示	
+            if (time==0) {
+                clearInterval(timer_ID);            //【タイマーの消去】
+            }
+        }
+        
+        function dispTime() {
+            document.getElementsByTagName("output")[0].innerHTML = time;
+        }
+
+        window.onload = function() {
+            dispTime();                                     // timeの表示
+            timer_ID = setInterval("minusTime()", 1000);    //【タイマーの設定】
+        }
+    </script>
 </head>
 
 <body>
+
+    <h1>Vote only once for each in time.</h1>
+    <h2>    <output></output>    </h2>
+
+    <br><br><br><br><br>
+
     <input type="radio" name="sample" value="red">red
     <input type="radio" name="sample" value="orange">orange
     <input type="radio" name="sample" value="yellow">yellow

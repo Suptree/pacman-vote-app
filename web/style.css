@@ -1,0 +1,7 @@
+input[type=radio]+label:before{
+    content: "";
+    display: inline-block;
+    background-size: contain;
+    width: 140px;
+    height: 140px;
+}
