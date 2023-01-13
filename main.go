@@ -13,6 +13,7 @@ import (
 
 	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/rs/cors"
 )
 
 // User User構造体
@@ -40,8 +41,8 @@ func main() {
 
 	router.HandleFunc("/door", createDoor).Methods("POST", "OPTIONS")
 	router.HandleFunc("/mode", createMode).Methods("POST", "OPTIONS")
-
-	log.Fatal(http.ListenAndServe(":80", router))
+	c := cors.Default().Handler(router)
+	log.Fatal(http.ListenAndServe(":80", c))
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
