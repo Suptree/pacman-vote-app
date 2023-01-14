@@ -5,3 +5,9 @@ input[type=radio]+label:before{
     width: 140px;
     height: 140px;
 }
+
+label img {
+    margin: 3px;
+    padding: 5px;
+    background-color: aqua;
+}
