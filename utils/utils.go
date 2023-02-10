@@ -33,7 +33,7 @@ func RespondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 
 // GetConnection DBとのコネクションを張る
 func GetConnection() *gorm.DB {
-	db, err := gorm.Open("mysql", "admin:10daiki23@tcp(database-pacman.ceomhswqanq4.ap-northeast-1.rds.amazonaws.com)/pacman")
+	db, err := gorm.Open("mysql", "user:password@tcp(xxx.amazonaws.com)/table")
 	// 接続に失敗したらエラーログを出して終了する
 	if err != nil {
 		log.Fatalf("DB connection failed %v", err)
